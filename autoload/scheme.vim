@@ -1,10 +1,17 @@
+let s:scheme_connected=0
+
 function! scheme#connect()
   " TODO: Add support for vertical splitting (see h:term_start options)
-  if has('terminal')
-      let s:repl_term_id = term_start('guile', {'term_finish': 'close'})
+  if s:scheme_connected
+      " TODO: Handle this better? SchemeConnect session already opened
+      return
+  elseif has('terminal')
+      let s:repl_term_id = term_start('guile', {'term_finish': 'close', 'exit_cb': {job, status -> execute("let s:scheme_connected=0")}})
+      let s:scheme_connected = 1
   else
       new
       let s:repl_term_id = termopen('mit-scheme')
+      let s:scheme_connected = 1
   endif
 
   if g:scheme_split_size != "default"
@@ -15,6 +22,11 @@ function! scheme#connect()
 endfunction
 
 function! scheme#eval(type)
+  if !s:scheme_connected
+      redraw
+      echom "Start a SchemeConnect session before evaluating expressions!"
+      return
+  endif
   let sel_save = &selection
   let &selection = "inclusive"
   let reg_save = @@
