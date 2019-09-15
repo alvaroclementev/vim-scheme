@@ -6,5 +6,5 @@ augroup filetype_scheme
     autocmd!
     autocmd FileType scheme nnoremap <buffer> cp :set opfunc=scheme#eval<cr>g@
     autocmd FileType scheme nnoremap <buffer> cpp :normal cpaf<cr>
-    autocmd FileType scheme vnoremap <buffer> <Leader>cp :<C-U>call scheme#eval(visualmode())<CR>
+    autocmd FileType scheme vnoremap <buffer> <Leader>cp :<C-U>call scheme#eval(visualmode(), 1)<CR>
 augroup END

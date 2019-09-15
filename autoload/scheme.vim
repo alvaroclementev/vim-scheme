@@ -21,7 +21,7 @@ function! scheme#connect()
   normal! G
 endfunction
 
-function! scheme#eval(type)
+function! scheme#eval(type, ...)
   if !s:scheme_connected
       redraw
       echom "Start a SchemeConnect session before evaluating expressions!"
@@ -32,7 +32,9 @@ function! scheme#eval(type)
   let reg_save = @@
 
   if a:0
-    silent exe "normal! `<" . a:type . "`>y"
+    " silent exe "normal! `<" . a:type . "`>y"
+    silent exe "normal! gvy"
+    let @@ = substitute(@@, '\n$', '', '') "Remove trailing newline
   elseif a:type == 'line'
     silent exe "normal! '[V']y"
   elseif a:type == 'block'
