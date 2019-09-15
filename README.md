@@ -1,5 +1,7 @@
 # vim-scheme
 
+This is a Vim 8+ port of Olical's [vim-scheme][].
+
 > Warning: Currently depends on [vim-sexp][] for selecting forms.
 
 This plugin allows you to evaluate [Scheme][] from within your buffer. It delegates evaluation to an [mit-scheme][] REPL started by a Neovim `:terminal` command.
@@ -65,6 +67,7 @@ Find the full [unlicense][] in the `UNLICENSE` file, but here's a snippet.
 
 Do what you want. Learn as much as you can. Unlicense more software.
 
+[vim-scheme]: https://github.com/Olical/vim-scheme
 [unlicense]: http://unlicense.org/
 [scheme]: https://en.wikipedia.org/wiki/Scheme_(programming_language)
 [clojure]: https://clojure.org/
