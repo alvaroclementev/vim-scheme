@@ -1,6 +1,11 @@
 function! scheme#connect()
-  new
-  let s:repl_term_id = termopen('mit-scheme')
+  " TODO: Add support for vertical splitting (see h:term_start options)
+  if has('terminal')
+      let s:repl_term_id = term_start('guile', {'term_finish': 'close'})
+  else
+      new
+      let s:repl_term_id = termopen('mit-scheme')
+  endif
 
   if g:scheme_split_size != "default"
     silent execute "resize " . g:scheme_split_size
@@ -24,7 +29,11 @@ function! scheme#eval(type)
     silent exe "normal! `[v`]y"
   endif
 
-  call jobsend(s:repl_term_id, @@ . "\n")
+  if has('terminal')
+      call term_sendkeys(s:repl_term_id, @@ . "\n")
+  else
+      call jobsend(s:repl_term_id, @@ . "\n")
+  endif
 
   let &selection = sel_save
   let @@ = reg_save
